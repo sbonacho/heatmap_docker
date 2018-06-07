@@ -1,0 +1,51 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    build: kafka-docker
+    ports:
+      - "9092:9092"
+      - "7071:7071"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 172.16.123.1
+      KAFKA_CREATE_TOPICS: "control:1:1,test:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_OPTS: "-javaagent:/opt/kafka/prometheus/prometheus.jar=7071:/opt/kafka/prometheus/kafka.yml"
+    volumes:
+      - $PWD/prometheus:/opt/kafka/prometheus
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/kafka-data:/tmp/kafka-logs
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ~/grafana-data:/var/lib/grafana
+  prometheus:
+    image: prom/prometheus
+    command: --config.file=/prometheus-data/prometheus.yml
+    ports:
+      - "9090:9090"
+    volumes:
+      - ~/prometheus-data:/prometheus-data
+  influxdb:
+    image: influxdb
+    command: -config /etc/influxdb/influxdb.conf
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    volumes:
+      - ~/influxdb-data:/var/lib/influxdb
+      - $PWD/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - $PWD/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ~/mosquitto-data:/mosquitto/data
+      - ~/mosquitto-log:/mosquitto/log
