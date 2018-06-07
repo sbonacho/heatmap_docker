@@ -4,10 +4,10 @@ This repository has the docker infrastructe for a Heat Map Demo.
 
 ## Start infrastructure
 
-Use the docker-compose command `docker-compose up -d`
+Use `./run.sh start`. This script wrap the docker-compose command and the initialization of virtual interface. 
 
 ```
-➜  heatmap_docker git:(master) ✗ docker-compose up -d
+➜  heatmap_docker git:(master) ✗ ./run.sh start
 Starting heatmap_docker_influxdb_1  ... done
 Starting heatmap_docker_kafka_1     ... done
 Starting heatmap_docker_mosquitto_1 ... done
@@ -27,10 +27,10 @@ open http://localhost:3000 (admin/admin)
 
 ## Stop Infrastructure
 
-Use the docker-compose command `docker-compose stop`
+Use `./run.sh stop`
 
 ```
-➜  heatmap_docker git:(master) ✗ docker-compose stop     
+➜  heatmap_docker git:(master) ✗ ./run.sh stop     
 Stopping heatmap_docker_grafana_1   ... done
 Stopping heatmap_docker_zookeeper_1 ... done
 Stopping heatmap_docker_mosquitto_1 ... done
