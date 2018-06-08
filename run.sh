@@ -87,22 +87,22 @@ function stop(){
     done
 }
 
+function install(){
+    createDirs
+    grafana
+    downloadKafka
+    prometheus
+    network
+}
+
 # ---------- Script -------
 
 case $1 in
     "install")
-        createDirs
-        grafana
-        downloadKafka
-        prometheus
-        network
+        install
         ;;
     "start")
-        createDirs
-        grafana
-        downloadKafka
-        prometheus
-        network
+        install
         docker-compose -f "$ORIG/docker-compose.yml" up -d
         ;;
     "stop")
