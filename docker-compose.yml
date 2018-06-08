@@ -16,13 +16,13 @@ services:
     volumes:
       - $PWD/prometheus:/opt/kafka/prometheus
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/kafka-data:/tmp/kafka-logs
+      - ~/.heatmap_docker/kafka-data:/tmp/kafka-logs
   grafana:
     image: grafana/grafana
     ports:
       - "3000:3000"
     volumes:
-      - ~/grafana-data:/var/lib/grafana
+      - ~/.heatmap_docker/grafana-data:/var/lib/grafana
   prometheus:
     image: prom/prometheus
     command: --config.file=/prometheus.yml
@@ -30,4 +30,4 @@ services:
       - "9090:9090"
     volumes:
       - $PWD/prometheus/prometheus.yml:/prometheus.yml
-      - ~/prometheus-data:/prometheus-data
+      - ~/.heatmap_docker/prometheus-data:/prometheus-data

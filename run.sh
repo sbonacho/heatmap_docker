@@ -6,12 +6,14 @@ KAFKA_DOCKER_GIT=https://github.com/wurstmeister/kafka-docker.git
 JMX_AGENT_URL=https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.9/jmx_prometheus_javaagent-0.9.jar
 KAFKA_DASHBOARD_URL=https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml
 MAP_PLUGIN_URL=https://grafana.com/api/plugins/grafana-worldmap-panel/versions/0.0.21/download
+GRAFANA_PLUGINS="grafana-worldmap-panel-c0f73da"
 
 # Definitions
 
 VIRTUALIP="172.16.123.1"
 ORIG=`pwd`
-DIRS="mosquitto-data mosquitto-logs influxdb-data grafana-data kafka-data prometheus-data"
+GRAFANA_DATA=".heatmap_docker/grafana-data"
+DIRS=".heatmap_docker/mosquitto-data .heatmap_docker/mosquitto-log .heatmap_docker/influxdb-data $GRAFANA_DATA .heatmap_docker/kafka-data .heatmap_docker/prometheus-data"
 PROMETHEUS=prometheus/prometheus.jar
 DASHBOARD=prometheus/kafka.yml
 
@@ -31,6 +33,15 @@ function downloadKafka(){
     if [ ! -d "kafka-docker" ]; then
         git clone $KAFKA_DOCKER_GIT
     fi
+}
+
+function grafana(){
+    for plugin in $GRAFANA_PLUGINS
+    do
+        if [ ! -d ~/$GRAFANA_DATA/plugins/$plugin ]; then
+            unzip "grafana/plugins/$plugin" -d ~/$GRAFANA_DATA/plugins
+        fi
+    done
 }
 
 function prometheus(){
@@ -79,16 +90,18 @@ function stop(){
 
 case $1 in
     "install")
+        createDirs
+        grafana
         downloadKafka
         prometheus
         network
-        createDirs
         ;;
     "start")
+        createDirs
+        grafana
         downloadKafka
         prometheus
         network
-        createDirs
         docker-compose -f "$ORIG/docker-compose.yml" up -d
         ;;
     "stop")

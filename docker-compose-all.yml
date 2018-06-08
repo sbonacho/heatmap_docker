@@ -7,7 +7,7 @@ services:
       - "8086:8086"
       - "8083:8083"
     volumes:
-      - ~/influxdb-data:/var/lib/influxdb
+      - ~/.heatmap_docker/influxdb-data:/var/lib/influxdb
       - $PWD/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
   mosquitto:
     image: eclipse-mosquitto
@@ -16,5 +16,5 @@ services:
       - "9001:9001"
     volumes:
       - $PWD/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
-      - ~/mosquitto-data:/mosquitto/data
-      - ~/mosquitto-log:/mosquitto/log
+      - ~/.heatmap_docker/mosquitto-data:/mosquitto/data
+      - ~/.heatmap_docker/mosquitto-log:/mosquitto/log
