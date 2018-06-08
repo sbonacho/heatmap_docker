@@ -29,6 +29,8 @@ This starts all services:
 
 open http://localhost:3000 (admin/admin)
 
+Import all dashboards from grafana/dashboards. See http://docs.grafana.org/reference/export_import/ for more information. 
+
 ## Stop Infrastructure
 
 Use `./run.sh stop`
