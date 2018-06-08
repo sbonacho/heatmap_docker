@@ -4,18 +4,19 @@
 
 KAFKA_DOCKER_GIT=https://github.com/wurstmeister/kafka-docker.git
 JMX_AGENT_URL=https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.9/jmx_prometheus_javaagent-0.9.jar
-KAFKA_DASHBOARD_URL=https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml
+JMX_CONF_URL=https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml
 MAP_PLUGIN_URL=https://grafana.com/api/plugins/grafana-worldmap-panel/versions/0.0.21/download
-GRAFANA_PLUGINS="grafana-worldmap-panel-c0f73da"
 
 # Definitions
 
-VIRTUALIP="172.16.123.1"
 ORIG=`pwd`
-GRAFANA_DATA=".heatmap_docker/grafana-data"
-DIRS=".heatmap_docker/mosquitto-data .heatmap_docker/mosquitto-log .heatmap_docker/influxdb-data $GRAFANA_DATA .heatmap_docker/kafka-data .heatmap_docker/prometheus-data"
-PROMETHEUS=prometheus/prometheus.jar
-DASHBOARD=prometheus/kafka.yml
+DATA_DIR=.heatmap_docker
+VIRTUALIP="172.16.123.1"
+GRAFANA_DATA="$DATA_DIR/grafana-data"
+DIRS="$DATA_DIR/mosquitto-data $DATA_DIR/mosquitto-log $DATA_DIR/influxdb-data $GRAFANA_DATA $DATA_DIR/kafka-data $DATA_DIR/prometheus-data"
+KAFKA_JMX_AGENT=prometheus/prometheus.jar
+KAFKA_JMX_CONF=prometheus/kafka.yml
+GRAFANA_PLUGINS="grafana-worldmap-panel-c0f73da"
 
 # ---------- Defaults --------
 
@@ -45,10 +46,10 @@ function grafana(){
 }
 
 function prometheus(){
-    if [ ! -f "$PROMETHEUS" ]; then
+    if [ ! -f "$KAFKA_JMX_AGENT" ]; then
         mkdir -p prometheus
-        curl $JMX_AGENT_URL -o $PROMETHEUS
-        curl $KAFKA_DASHBOARD_URL -o $DASHBOARD
+        curl $JMX_AGENT_URL -o $KAFKA_JMX_AGENT
+        curl $JMX_CONF_URL -o $KAFKA_JMX_CONF
     fi
 }
 

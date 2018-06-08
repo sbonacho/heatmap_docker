@@ -2,6 +2,10 @@
 
 This repository has the docker infrastructe for a Heat Map Demo.
 
+## Install infrastructure
+
+Run `./run.sh install`. This scripts create all data folders and download all tools.
+
 ## Start infrastructure
 
 Use `./run.sh start`. This script wrap the docker-compose command and the initialization of virtual interface. 
