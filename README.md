@@ -12,11 +12,10 @@ Use `./run.sh start`. This script wrap the docker-compose command and the initia
 
 ```
 ➜  heatmap_docker git:(master) ✗ ./run.sh start
-Starting heatmap_docker_influxdb_1  ... done
-Starting heatmap_docker_kafka_1     ... done
-Starting heatmap_docker_mosquitto_1 ... done
-Starting heatmap_docker_zookeeper_1 ... done
-Starting heatmap_docker_grafana_1   ... done
+Starting heatmap_docker_grafana_1    ... done
+Starting heatmap_docker_prometheus_1 ... done
+Starting heatmap_docker_kafka_1      ... done
+Starting heatmap_docker_zookeeper_1  ... done
 ```
 
 First execution will build the kafka image.
@@ -37,9 +36,8 @@ Use `./run.sh stop`
 
 ```
 ➜  heatmap_docker git:(master) ✗ ./run.sh stop     
-Stopping heatmap_docker_grafana_1   ... done
-Stopping heatmap_docker_zookeeper_1 ... done
-Stopping heatmap_docker_mosquitto_1 ... done
-Stopping heatmap_docker_kafka_1     ... done
-Stopping heatmap_docker_influxdb_1  ... done
+Stopping heatmap_docker_kafka_1      ... done
+Stopping heatmap_docker_prometheus_1 ... done
+Stopping heatmap_docker_grafana_1    ... done
+Stopping heatmap_docker_zookeeper_1  ... done
 ```
