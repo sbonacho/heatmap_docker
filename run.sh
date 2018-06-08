@@ -5,7 +5,6 @@
 KAFKA_DOCKER_GIT=https://github.com/wurstmeister/kafka-docker.git
 JMX_AGENT_URL=https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.9/jmx_prometheus_javaagent-0.9.jar
 JMX_CONF_URL=https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml
-MAP_PLUGIN_URL=https://grafana.com/api/plugins/grafana-worldmap-panel/versions/0.0.21/download
 
 # Definitions
 
